@@ -591,6 +591,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "ckb-merkle-mountain-range"
+version = "0.3.0"
+source = "git+https://github.com/nervosnetwork/merkle-mountain-range.git#ea232474496bdf072d7de33297fd54f1ef8df599"
+dependencies = [
+ "cfg-if",
+]
+
+[[package]]
 name = "clang-sys"
 version = "0.28.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1587,11 +1595,10 @@ dependencies = [
 name = "frame-system"
 version = "2.0.0-alpha.3"
 dependencies = [
- "blake2",
+ "ckb-merkle-mountain-range",
  "criterion 0.2.11",
  "frame-support",
  "impl-trait-for-tuples",
- "merkle-mountain-range",
  "parity-scale-codec",
  "serde",
  "sp-core",
@@ -3183,15 +3190,6 @@ name = "memory_units"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71d96e3f3c0b6325d8ccd83c33b28acb183edcb6c67938ba104ec546854b0882"
-
-[[package]]
-name = "merkle-mountain-range"
-version = "0.2.0"
-dependencies = [
- "blake2",
- "parity-scale-codec",
- "sp-std",
-]
 
 [[package]]
 name = "merlin"
