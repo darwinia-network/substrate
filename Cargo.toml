@@ -151,6 +151,7 @@ members = [
 	"primitives/transaction-pool",
 	"primitives/trie",
 	"primitives/wasm-interface",
+	"primitives/merkle-mountain-range",
 	"test-utils/client",
 	"test-utils/runtime",
 	"test-utils/runtime/client",
