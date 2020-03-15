@@ -122,6 +122,8 @@ use frame_support::{
 };
 use codec::{Encode, Decode, FullCodec, EncodeLike};
 
+use merkle_mountain_range::MerkleMountainRange;
+
 #[cfg(any(feature = "std", test))]
 use sp_io::TestExternalities;
 
@@ -338,6 +340,9 @@ decl_storage! {
 
 		/// Hash of the previous block.
 		ParentHash get(fn parent_hash) build(|_| hash69()): T::Hash;
+
+		/// MMR struct of the previous blocks, from first(genesis) to parent hash.
+		MMR get(fn mmr) : MerkleMountainRange<blake2::Blake2b>;
 
 		/// Extrinsics root of the current block, also part of the block header.
 		ExtrinsicsRoot get(fn extrinsics_root): T::Hash;
@@ -859,6 +864,16 @@ impl<T: Trait> Module<T> {
 			);
 			digest.push(item);
 		}
+
+		// Update MMR and add mmr root to digest of block header
+		let mut mmr =  <MMR>::take();
+		mmr.append(parent_hash);
+		let mmr_root = mmr.root().expect("Failed to calculate merkle mountain range; qed");
+
+		let mmr_item = generic::DigestItem::MerkleMountainRangeRoot(
+			mmr_root.into()
+		);
+		digest.push(mmr_item);
 
 		// The following fields
 		//

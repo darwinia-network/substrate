@@ -1587,9 +1587,11 @@ dependencies = [
 name = "frame-system"
 version = "2.0.0-alpha.3"
 dependencies = [
+ "blake2",
  "criterion 0.2.11",
  "frame-support",
  "impl-trait-for-tuples",
+ "merkle-mountain-range",
  "parity-scale-codec",
  "serde",
  "sp-core",
@@ -3184,7 +3186,7 @@ checksum = "71d96e3f3c0b6325d8ccd83c33b28acb183edcb6c67938ba104ec546854b0882"
 
 [[package]]
 name = "merkle-mountain-range"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "blake2",
  "parity-scale-codec",
