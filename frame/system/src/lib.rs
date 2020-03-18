@@ -122,8 +122,6 @@ use frame_support::{
 };
 use codec::{Encode, Decode, FullCodec, EncodeLike};
 
-use merkle_mountain_range::{MMR, MMRStore};
-
 #[cfg(any(feature = "std", test))]
 use sp_io::TestExternalities;
 
@@ -367,13 +365,6 @@ decl_storage! {
 
 		/// Hash of the previous block.
 		ParentHash get(fn parent_hash) build(|_| hash69()): T::Hash;
-
-		/// MMR struct of the previous blocks, from first(genesis) to parent hash.
-		pub MMRList get(fn mmr_list): map hasher(twox_64_concat) u64 => T::Hash;
-        pub MMRCounter get(fn mmr_counter): u64;
-
-
-//		MMR get(fn mmr) : MerkleMountainRange<blake2::Blake2b>;
 
 		/// Extrinsics root of the current block, also part of the block header.
 		ExtrinsicsRoot get(fn extrinsics_root): T::Hash;
@@ -903,20 +894,6 @@ impl<T: Trait> Module<T> {
 			digest.push(item);
 		}
 
-		let store = ModuleMMRStore::<T>::default();
-		let mut mmr = MMR::<_, MMRMerge<T>, _>::new(<MMRCounter>::get(), store);
-		// Update MMR and add mmr root to digest of block header
-		mmr.push(parent_hash).expect("Failed to push parent hash to mmr.");
-
-		let mmr_root = mmr.get_root().expect("Failed to calculate merkle mountain range; qed");
-
-		mmr.commit().expect("Failed to push parent hash to mmr.");
-
-		let mmr_item = generic::DigestItem::MerkleMountainRangeRoot(
-			mmr_root.into()
-		);
-		digest.push(mmr_item);
-
 		// The following fields
 		//
 		// - <Events<T>>
@@ -1075,48 +1052,6 @@ pub struct CallKillAccount<T>(PhantomData<T>);
 impl<T: Trait> Happened<T::AccountId> for CallKillAccount<T> {
 	fn happened(who: &T::AccountId) {
 		Module::<T>::kill_account(who)
-	}
-}
-
-pub struct MMRMerge<T>(PhantomData<T>);
-
-impl<T: Trait>  merkle_mountain_range::Merge for MMRMerge<T> {
-	type Item = T::Hash;
-	fn merge(lhs: &Self::Item, rhs: &Self::Item) -> Self::Item {
-		let encoded_vec = vec![lhs, rhs];
-		T::Hashing::hash_of(&encoded_vec)
-	}
-}
-
-pub struct ModuleMMRStore<T>(PhantomData<T>);
-impl<T> Default for ModuleMMRStore<T> {
-	fn default() -> Self {
-		ModuleMMRStore(sp_std::marker::PhantomData)
-	}
-}
-
-impl<T: Trait> MMRStore<T::Hash> for ModuleMMRStore<T> {
-	fn get_elem(&self, pos: u64) -> merkle_mountain_range::Result<Option<T::Hash>> {
-		Ok(Some(Module::<T>::mmr_list(pos)))
-	}
-
-	fn append(&mut self, pos: u64, elems: Vec<T::Hash>) -> merkle_mountain_range::Result<()> {
-		let mmr_count = <MMRCounter>::get();
-		if pos != mmr_count {
-			// Must be append only.
-			return Err(merkle_mountain_range::Error::InconsistentStore)
-		}
-
-		let elems_len = elems.len() as u64;
-
-		for (i, elem) in elems.into_iter().enumerate() {
-			<MMRList<T>>::insert(mmr_count + i as u64, elem);
-		}
-
-		// increment counter
-		<MMRCounter>::put(mmr_count + elems_len);
-
-		Ok(())
 	}
 }
 

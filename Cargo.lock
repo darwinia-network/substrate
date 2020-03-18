@@ -591,14 +591,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ckb-merkle-mountain-range"
-version = "0.3.0"
-source = "git+https://github.com/nervosnetwork/merkle-mountain-range.git#ea232474496bdf072d7de33297fd54f1ef8df599"
-dependencies = [
- "cfg-if",
-]
-
-[[package]]
 name = "clang-sys"
 version = "0.28.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1597,7 +1589,6 @@ dependencies = [
 name = "frame-system"
 version = "2.0.0-alpha.3"
 dependencies = [
- "ckb-merkle-mountain-range",
  "criterion 0.2.11",
  "frame-support",
  "impl-trait-for-tuples",
