@@ -64,7 +64,7 @@ fn non_system_mmr_digest_item_encoding() {
 	let item = DigestItem::MerkleMountainRangeRoot::<H256>(H256::default());
 	let encoded = item.encode();
 	assert_eq!(encoded, vec![
-		// type = DigestItemType::ChangesTrieRoot
+		// type = DigestItemType::MerkleMountainRangeRoot
 		18,
 		// trie root
 		0, 0, 0, 0,
