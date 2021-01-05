@@ -34,7 +34,7 @@ sc-keystore = { version = "2.0.0", path = "../keystore" }
 
 [target.'cfg(not(target_os = "unknown"))'.dependencies]
 hyper = "0.13.9"
-hyper-rustls = "0.21.0"
+hyper-rustls = "0.22.1"
 
 [dev-dependencies]
 sc-client-db = { version = "0.8.0", default-features = true, path = "../db/" }
