@@ -23,7 +23,7 @@ libp2p = { version = "0.33.0", default-features = false, features = ["dns", "tcp
 log = "0.4.8"
 pin-project = "0.4.6"
 rand = "0.7.2"
-serde = { version = "1.0.101", features = ["derive"] }
+serde = { version = "1.0.119", features = ["derive"] }
 slog = { version = "2.5.2", features = ["nested-values"] }
 slog-json = { version = "2.3.0", features = ["nested-values"] }
 slog-scope = "4.1.2"
