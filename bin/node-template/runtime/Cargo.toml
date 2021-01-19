@@ -23,7 +23,7 @@ frame-system = { version = "2.0.0", default-features = false, path = "../../../f
 pallet-timestamp = { version = "2.0.0", default-features = false, path = "../../../frame/timestamp" }
 pallet-transaction-payment = { version = "2.0.0", default-features = false, path = "../../../frame/transaction-payment" }
 frame-executive = { version = "2.0.0", default-features = false, path = "../../../frame/executive" }
-serde = { version = "1.0.101", optional = true, features = ["derive"] }
+serde = { version = "1.0.120", optional = true, features = ["derive"] }
 sp-api = { version = "2.0.0", default-features = false, path = "../../../primitives/api" }
 sp-block-builder = { path = "../../../primitives/block-builder", default-features = false, version = "2.0.0"}
 sp-consensus-aura = { version = "0.8.0", default-features = false, path = "../../../primitives/consensus/aura" }
