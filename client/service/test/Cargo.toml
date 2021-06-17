@@ -40,5 +40,5 @@ sc-client-api = { version = "3.0.0", path = "../../api" }
 sc-block-builder = { version = "0.9.0", path = "../../block-builder" }
 sc-executor = { version = "0.9.0", path = "../../executor" }
 sp-panic-handler = { version = "3.0.0", path = "../../../primitives/panic-handler" }
-parity-scale-codec = "2.0.0"
+parity-scale-codec = "2.1.3"
 sp-tracing = { version = "3.0.0", path = "../../../primitives/tracing" }
